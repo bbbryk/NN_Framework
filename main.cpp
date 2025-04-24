@@ -5,30 +5,8 @@
 #include "Conv/Conv1Dlayer.hpp"
 
 #include "NeuralNetwork.hpp"
+#include <chrono>
 
-// int main() {
-//     NeuralNetwork<
-//         Dense<float, 4, 5, ReLU<float>>, // з ReLU
-//         Dense<float, 5, 2>               // з Identity (за замовчуванням)
-//     > net;
-
-//     net.print_weights();
-
-//     Tensor<float, 1> input(4);
-//     input[0] = 0.5f;
-//     input[1] = -1.2f;
-//     input[2] = 0.3f;
-//     input[3] = 2.0f;
-
-//     auto output = net.forward(input);
-
-//     std::cout << "Output:\n";
-//     for (std::size_t i = 0; i < output.size(); ++i) {
-//         std::cout << output[i] << "\n";
-//     }
-
-//     return 0;
-// }
 int main() {
     NeuralNetwork<
         Conv1D<float, 10, 3, 4, ReLU<float>>,    
@@ -124,7 +102,12 @@ int main() {
     for (int i = 0; i < 10; i++)
         input[i] = static_cast<float>(i);
 
-    auto output = net.forward(input);
+    // auto start = std::chrono::high_resolution_clock::now();
+    // auto output = net.forward(input);
+    // auto end = std::chrono::high_resolution_clock::now();
+
+    std::chrono::duration<double, std::micro> duration = end - start;
+    std::cout << "Forward pass took " << duration.count() << " microseconds\n";
 
     std::cout << "Output:\n";
     for (std::size_t i = 0; i < output.size(); ++i)
